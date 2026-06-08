@@ -1,0 +1,911 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Family Life Wheel — Alverde Coaching</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      :root {
+        --deep-forest: #2c4a3e;
+        --sage: #7a9e8e;
+        --amber: #c8913a;
+        --pale-sage: #e8f0ec;
+        --morning-sky: #b8cdd4;
+        --fog: #f4f2ee;
+        --text-dark: #1e2e28;
+        --text-mid: #4a6258;
+        --text-light: #7a9e8e;
+        --border: rgba(44, 74, 62, 0.12);
+
+        --c0: #3266ad;
+        --c1: #5dcaa5;
+        --c2: #d85a30;
+        --c3: #9f6cbf;
+        --c4: #ba7517;
+        --c5: #1d9e75;
+        --c6: #d4537e;
+        --c7: #185fa5;
+        --c8: #639922;
+        --c9: #888780;
+      }
+
+      body {
+        font-family: "DM Sans", sans-serif;
+        background: var(--fog);
+        color: var(--text-dark);
+        min-height: 100vh;
+        padding: 0;
+      }
+
+      header {
+        background: var(--deep-forest);
+        padding: 2rem 3rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .brand {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 1.5rem;
+        font-weight: 500;
+        color: #fff;
+        letter-spacing: 0.01em;
+      }
+
+      .brand span {
+        color: var(--amber);
+      }
+
+      .header-tag {
+        font-size: 0.75rem;
+        font-weight: 300;
+        color: var(--morning-sky);
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+
+      .hero {
+        background: var(--deep-forest);
+        padding: 3rem 3rem 4rem;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .hero::before {
+        content: "";
+        position: absolute;
+        top: -60px;
+        right: -60px;
+        width: 300px;
+        height: 300px;
+        border-radius: 50%;
+        border: 1px solid rgba(200, 145, 58, 0.15);
+      }
+
+      .hero::after {
+        content: "";
+        position: absolute;
+        bottom: -80px;
+        left: -40px;
+        width: 220px;
+        height: 220px;
+        border-radius: 50%;
+        border: 1px solid rgba(122, 158, 142, 0.2);
+      }
+
+      .hero h1 {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 2.8rem;
+        font-weight: 400;
+        color: #fff;
+        line-height: 1.2;
+        margin-bottom: 1rem;
+      }
+
+      .hero h1 em {
+        color: var(--amber);
+        font-style: italic;
+      }
+
+      .hero p {
+        font-size: 0.95rem;
+        font-weight: 300;
+        color: var(--morning-sky);
+        max-width: 520px;
+        margin: 0 auto;
+        line-height: 1.7;
+      }
+
+      main {
+        max-width: 960px;
+        margin: 0 auto;
+        padding: 3rem 2rem 4rem;
+      }
+
+      .instructions {
+        background: #fff;
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 1.5rem 2rem;
+        margin-bottom: 2.5rem;
+        display: flex;
+        gap: 2rem;
+        align-items: flex-start;
+      }
+
+      .instr-icon {
+        width: 44px;
+        height: 44px;
+        background: var(--pale-sage);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        font-size: 1.3rem;
+      }
+
+      .instr-text h3 {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: var(--deep-forest);
+        margin-bottom: 0.4rem;
+      }
+
+      .instr-text p {
+        font-size: 0.85rem;
+        color: var(--text-mid);
+        line-height: 1.6;
+        font-weight: 300;
+      }
+
+      .wheel-section {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+        align-items: start;
+      }
+
+      @media (max-width: 700px) {
+        .wheel-section {
+          grid-template-columns: 1fr;
+        }
+        header {
+          padding: 1.5rem;
+        }
+        .hero {
+          padding: 2rem 1.5rem 3rem;
+        }
+        .hero h1 {
+          font-size: 2rem;
+        }
+        main {
+          padding: 2rem 1rem 3rem;
+        }
+        .instructions {
+          flex-direction: column;
+          gap: 1rem;
+        }
+      }
+
+      .canvas-wrap {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      canvas {
+        max-width: 100%;
+        height: auto;
+        cursor: crosshair;
+        border-radius: 50%;
+      }
+
+      .score-bar {
+        background: #fff;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 0.75rem 1.25rem;
+        font-size: 0.85rem;
+        color: var(--text-mid);
+        text-align: center;
+        width: 100%;
+      }
+
+      .score-bar strong {
+        color: var(--deep-forest);
+        font-weight: 500;
+      }
+
+      .btn-row {
+        display: flex;
+        gap: 0.75rem;
+        justify-content: center;
+        flex-wrap: wrap;
+        width: 100%;
+      }
+
+      button {
+        font-family: "DM Sans", sans-serif;
+        font-size: 0.85rem;
+        font-weight: 400;
+        padding: 0.6rem 1.4rem;
+        border-radius: 6px;
+        border: 1px solid var(--border);
+        background: #fff;
+        color: var(--text-dark);
+        cursor: pointer;
+        transition: all 0.15s;
+      }
+
+      button:hover {
+        background: var(--pale-sage);
+        border-color: var(--sage);
+      }
+
+      button.primary {
+        background: var(--deep-forest);
+        color: #fff;
+        border-color: var(--deep-forest);
+      }
+
+      button.primary:hover {
+        background: #1e3a30;
+      }
+
+      button.amber {
+        background: var(--amber);
+        color: #fff;
+        border-color: var(--amber);
+      }
+
+      button.amber:hover {
+        background: #b07d2e;
+      }
+
+      .legend-panel {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+
+      .legend-panel h3 {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: var(--deep-forest);
+        margin-bottom: 0.5rem;
+      }
+
+      .legend-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+        padding: 0.65rem 0.9rem;
+        background: #fff;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.15s;
+        position: relative;
+      }
+
+      .legend-item:hover {
+        border-color: var(--sage);
+        background: var(--pale-sage);
+      }
+
+      .legend-item.active {
+        border-color: var(--deep-forest);
+        background: var(--pale-sage);
+      }
+
+      .legend-dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        flex-shrink: 0;
+        margin-top: 3px;
+      }
+
+      .legend-content {
+        flex: 1;
+      }
+
+      .legend-name {
+        font-size: 0.85rem;
+        font-weight: 500;
+        color: var(--text-dark);
+        display: block;
+      }
+
+      .legend-desc {
+        font-size: 0.75rem;
+        color: var(--text-light);
+        font-weight: 300;
+        line-height: 1.4;
+        display: none;
+      }
+
+      .legend-item.active .legend-desc {
+        display: block;
+      }
+
+      .legend-score {
+        font-size: 0.8rem;
+        font-weight: 500;
+        color: var(--text-mid);
+        min-width: 28px;
+        text-align: right;
+        align-self: center;
+      }
+
+      .results-panel {
+        display: none;
+        margin-top: 2.5rem;
+        background: #fff;
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        overflow: hidden;
+      }
+
+      .results-panel.visible {
+        display: block;
+      }
+
+      .results-header {
+        background: var(--deep-forest);
+        padding: 1.25rem 2rem;
+      }
+
+      .results-header h2 {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 1.4rem;
+        font-weight: 400;
+        color: #fff;
+      }
+
+      .results-header p {
+        font-size: 0.8rem;
+        color: var(--morning-sky);
+        font-weight: 300;
+        margin-top: 0.25rem;
+      }
+
+      .results-body {
+        padding: 1.5rem 2rem;
+      }
+
+      .results-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.75rem;
+        margin-bottom: 1.5rem;
+      }
+
+      @media (max-width: 500px) {
+        .results-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      .result-row {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 0.85rem;
+      }
+
+      .result-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        flex-shrink: 0;
+      }
+
+      .result-name {
+        flex: 1;
+        color: var(--text-mid);
+        font-weight: 300;
+      }
+
+      .result-score {
+        font-weight: 500;
+        color: var(--text-dark);
+      }
+
+      .result-bar-bg {
+        flex: 2;
+        height: 4px;
+        background: var(--pale-sage);
+        border-radius: 2px;
+        overflow: hidden;
+      }
+
+      .result-bar-fill {
+        height: 100%;
+        border-radius: 2px;
+        transition: width 0.6s ease;
+      }
+
+      .summary-stats {
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+        padding-top: 1rem;
+        border-top: 1px solid var(--border);
+      }
+
+      .stat-card {
+        flex: 1;
+        min-width: 120px;
+        background: var(--pale-sage);
+        border-radius: 8px;
+        padding: 0.75rem 1rem;
+      }
+
+      .stat-label {
+        font-size: 0.7rem;
+        color: var(--text-light);
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        font-weight: 400;
+      }
+
+      .stat-value {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 1.8rem;
+        font-weight: 500;
+        color: var(--deep-forest);
+        line-height: 1.2;
+      }
+
+      .stat-sub {
+        font-size: 0.72rem;
+        color: var(--text-mid);
+        font-weight: 300;
+      }
+
+      .print-note {
+        margin-top: 1rem;
+        font-size: 0.78rem;
+        color: var(--text-light);
+        text-align: center;
+        font-weight: 300;
+        font-style: italic;
+      }
+
+      footer {
+        text-align: center;
+        padding: 2rem;
+        font-size: 0.75rem;
+        color: var(--text-light);
+        font-weight: 300;
+        border-top: 1px solid var(--border);
+      }
+
+      @media print {
+        header {
+          background: #2c4a3e !important;
+          -webkit-print-color-adjust: exact;
+          print-color-adjust: exact;
+        }
+        .hero {
+          background: #2c4a3e !important;
+          -webkit-print-color-adjust: exact;
+          print-color-adjust: exact;
+        }
+        .btn-row {
+          display: none;
+        }
+        .results-panel {
+          display: block !important;
+        }
+        body {
+          background: #fff;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="brand">Alverde<span> Coaching</span></div>
+      <div class="header-tag">Family Intake Assessment</div>
+    </header>
+
+    <div class="hero">
+      <h1>The Family <em>Life Wheel</em></h1>
+      <p>
+        A quick snapshot of where your family is right now — not where you think
+        it should be, or where it used to be. Just right now.
+      </p>
+    </div>
+
+    <main>
+      <div class="instructions">
+        <div class="instr-icon">🌿</div>
+        <div class="instr-text">
+          <h3>How to use this wheel</h3>
+          <p>
+            Click inside any section of the wheel to set your score — closer to
+            the center means a lower score, near the outer edge means a 10.
+            There are no right answers. When you've rated all ten areas, click
+            <strong>Show my results</strong> to see a summary you can print or
+            save.
+          </p>
+        </div>
+      </div>
+
+      <div class="wheel-section">
+        <div class="canvas-wrap">
+          <canvas id="wheel" width="440" height="440"></canvas>
+          <div class="score-bar" id="scoreBar">Click any section to begin</div>
+          <div class="btn-row">
+            <button onclick="resetAll()">↺ Reset</button>
+            <button class="primary" onclick="showResults()">
+              Show my results
+            </button>
+            <button class="amber" onclick="window.print()">Print</button>
+          </div>
+        </div>
+
+        <div class="legend-panel">
+          <h3>Ten areas of family life</h3>
+          <div id="legend"></div>
+        </div>
+      </div>
+
+      <div class="results-panel" id="resultsPanel">
+        <div class="results-header">
+          <h2>Your Family Life Wheel — snapshot</h2>
+          <p id="resultsDate"></p>
+        </div>
+        <div class="results-body">
+          <div class="results-grid" id="resultsGrid"></div>
+          <div class="summary-stats" id="summaryStats"></div>
+          <p class="print-note">
+            Bring this summary to your coaching session or use it to start a
+            conversation at home.
+          </p>
+        </div>
+      </div>
+    </main>
+
+    <footer>
+      Alverde Coaching, LLC &nbsp;·&nbsp; Petaluma, California &nbsp;·&nbsp;
+      alverdecoaching.com
+    </footer>
+
+    <script>
+      const CATS = [
+        {
+          name: "Morning routine",
+          color: "#3266ad",
+          desc: "How smoothly mornings start — wake-up, meals, getting out the door on time",
+        },
+        {
+          name: "Bedtime routine",
+          color: "#5DCAA5",
+          desc: "Wind-down, sleep onset, consistency, and overnight rest quality",
+        },
+        {
+          name: "School & learning",
+          color: "#D85A30",
+          desc: "Academic engagement, homework attitude, and how your child feels about school",
+        },
+        {
+          name: "Friendships",
+          color: "#9F6CBF",
+          desc: "Quality of peer relationships, social confidence, and sense of belonging",
+        },
+        {
+          name: "Extracurriculars",
+          color: "#BA7517",
+          desc: "Activities, sports, arts — balance between involvement, enjoyment, and follow-through",
+        },
+        {
+          name: "Family connection",
+          color: "#1D9E75",
+          desc: "Warmth, communication, shared time, and whether everyone feels heard at home",
+        },
+        {
+          name: "Emotional regulation",
+          color: "#D4537E",
+          desc: "Managing big feelings, meltdowns, resilience, and self-soothing",
+        },
+        {
+          name: "Parent wellbeing",
+          color: "#185FA5",
+          desc: "Your own energy, stress level, support system, and sense of balance",
+        },
+        {
+          name: "Independence & chores",
+          color: "#639922",
+          desc: "Age-appropriate responsibility, self-care, and contribution to the household",
+        },
+        {
+          name: "Screen & downtime",
+          color: "#888780",
+          desc: "Balance between tech, free play, rest, and offline activities",
+        },
+      ];
+
+      const N = CATS.length;
+      const scores = new Array(N).fill(0);
+      const canvas = document.getElementById("wheel");
+      const ctx = canvas.getContext("2d");
+      const CX = 220,
+        CY = 220,
+        R = 195,
+        RINGS = 10;
+
+      function draw() {
+        ctx.clearRect(0, 0, 440, 440);
+        const slice = (2 * Math.PI) / N;
+
+        for (let i = 0; i < N; i++) {
+          const startA = -Math.PI / 2 + i * slice;
+          const endA = startA + slice;
+
+          ctx.beginPath();
+          ctx.moveTo(CX, CY);
+          ctx.arc(CX, CY, R, startA, endA);
+          ctx.closePath();
+          ctx.fillStyle = "rgba(232,240,236,0.5)";
+          ctx.fill();
+
+          if (scores[i] > 0) {
+            const fr = (scores[i] / RINGS) * R;
+            ctx.beginPath();
+            ctx.moveTo(CX, CY);
+            ctx.arc(CX, CY, fr, startA, endA);
+            ctx.closePath();
+            ctx.fillStyle = CATS[i].color + "BB";
+            ctx.fill();
+          }
+
+          ctx.beginPath();
+          ctx.moveTo(CX, CY);
+          ctx.arc(CX, CY, R, startA, endA);
+          ctx.closePath();
+          ctx.strokeStyle = "rgba(44,74,62,0.15)";
+          ctx.lineWidth = 0.75;
+          ctx.stroke();
+        }
+
+        for (let r = 1; r <= RINGS; r++) {
+          ctx.beginPath();
+          ctx.arc(CX, CY, (r / RINGS) * R, 0, 2 * Math.PI);
+          ctx.strokeStyle =
+            r === RINGS ? "rgba(44,74,62,0.3)" : "rgba(44,74,62,0.1)";
+          ctx.lineWidth = r === RINGS ? 1.5 : 0.5;
+          ctx.stroke();
+
+          if (r % 2 === 0 && r < RINGS) {
+            ctx.fillStyle = "rgba(44,74,62,0.3)";
+            ctx.font = "9px DM Sans, sans-serif";
+            ctx.textAlign = "center";
+            ctx.textBaseline = "middle";
+            const lr = (r / RINGS) * R;
+            ctx.fillText(r, CX + lr - 6, CY - 4);
+          }
+        }
+
+        for (let i = 0; i < N; i++) {
+          const a = -Math.PI / 2 + i * ((2 * Math.PI) / N);
+          ctx.beginPath();
+          ctx.moveTo(CX, CY);
+          ctx.lineTo(CX + R * Math.cos(a), CY + R * Math.sin(a));
+          ctx.strokeStyle = "rgba(44,74,62,0.15)";
+          ctx.lineWidth = 1;
+          ctx.stroke();
+        }
+
+        for (let i = 0; i < N; i++) {
+          const midA = -Math.PI / 2 + i * ((2 * Math.PI) / N) + Math.PI / N;
+          const lr = R + 18;
+          const lx = CX + lr * Math.cos(midA);
+          const ly = CY + lr * Math.sin(midA);
+          const words = CATS[i].name.split(" ");
+          ctx.fillStyle = "#2C4A3E";
+          ctx.font = "500 10px DM Sans, sans-serif";
+          ctx.textAlign = "center";
+          ctx.textBaseline = "middle";
+          if (words.length <= 2) {
+            const mid = Math.ceil(words.length / 2);
+            const l1 = words.slice(0, mid).join(" ");
+            const l2 = words.slice(mid).join(" ");
+            if (l2) {
+              ctx.fillText(l1, lx, ly - 6);
+              ctx.fillText(l2, lx, ly + 6);
+            } else ctx.fillText(l1, lx, ly);
+          } else {
+            const mid = Math.ceil(words.length / 2);
+            ctx.fillText(words.slice(0, mid).join(" "), lx, ly - 6);
+            ctx.fillText(words.slice(mid).join(" "), lx, ly + 6);
+          }
+
+          if (scores[i] > 0) {
+            const sr = (scores[i] / RINGS) * R * 0.8;
+            const sx = CX + sr * Math.cos(midA);
+            const sy = CY + sr * Math.sin(midA);
+            ctx.beginPath();
+            ctx.arc(sx, sy, 9, 0, 2 * Math.PI);
+            ctx.fillStyle = CATS[i].color;
+            ctx.fill();
+            ctx.fillStyle = "#fff";
+            ctx.font = "500 9px DM Sans, sans-serif";
+            ctx.textAlign = "center";
+            ctx.textBaseline = "middle";
+            ctx.fillText(scores[i], sx, sy);
+          }
+        }
+      }
+
+      function getHit(x, y) {
+        const dx = x - CX,
+          dy = y - CY;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < 10 || dist > R) return null;
+        let angle = Math.atan2(dy, dx) + Math.PI / 2;
+        if (angle < 0) angle += 2 * Math.PI;
+        const slice = (2 * Math.PI) / N;
+        const seg = Math.floor(angle / slice) % N;
+        const score = Math.max(1, Math.min(10, Math.round((dist / R) * 10)));
+        return { seg, score };
+      }
+
+      canvas.addEventListener("click", function (e) {
+        const rect = canvas.getBoundingClientRect();
+        const sx = canvas.width / rect.width;
+        const sy = canvas.height / rect.height;
+        const hit = getHit(
+          (e.clientX - rect.left) * sx,
+          (e.clientY - rect.top) * sy,
+        );
+        if (!hit) return;
+        scores[hit.seg] = hit.score;
+        updateLegend();
+        updateScoreBar();
+        draw();
+      });
+
+      function updateScoreBar() {
+        const rated = scores.filter((s) => s > 0);
+        if (!rated.length) {
+          document.getElementById("scoreBar").innerHTML =
+            "Click any section to begin";
+          return;
+        }
+        const avg = (rated.reduce((a, b) => a + b, 0) / rated.length).toFixed(
+          1,
+        );
+        document.getElementById("scoreBar").innerHTML =
+          `<strong>${rated.length}</strong> of ${N} areas rated &nbsp;·&nbsp; Average: <strong>${avg} / 10</strong>`;
+      }
+
+      function buildLegend() {
+        const el = document.getElementById("legend");
+        CATS.forEach((c, i) => {
+          const div = document.createElement("div");
+          div.className = "legend-item";
+          div.id = `li-${i}`;
+          div.onclick = () => div.classList.toggle("active");
+          div.innerHTML = `
+      <span class="legend-dot" style="background:${c.color}"></span>
+      <span class="legend-content">
+        <span class="legend-name">${c.name}</span>
+        <span class="legend-desc">${c.desc}</span>
+      </span>
+      <span class="legend-score" id="ls-${i}">—</span>`;
+          el.appendChild(div);
+        });
+      }
+
+      function updateLegend() {
+        CATS.forEach((_, i) => {
+          const el = document.getElementById(`ls-${i}`);
+          if (el) el.textContent = scores[i] > 0 ? `${scores[i]}/10` : "—";
+        });
+      }
+
+      function resetAll() {
+        scores.fill(0);
+        updateLegend();
+        updateScoreBar();
+        document.getElementById("resultsPanel").classList.remove("visible");
+        draw();
+      }
+
+      function showResults() {
+        const rated = scores.filter((s) => s > 0);
+        if (!rated.length) {
+          alert("Please rate at least one area first.");
+          return;
+        }
+
+        const avg = (rated.reduce((a, b) => a + b, 0) / rated.length).toFixed(
+          1,
+        );
+        const low = CATS.filter((_, i) => scores[i] > 0 && scores[i] <= 4).map(
+          (c) => c.name,
+        );
+        const high = CATS.filter((_, i) => scores[i] >= 8).map((c) => c.name);
+
+        document.getElementById("resultsDate").textContent =
+          "Completed " +
+          new Date().toLocaleDateString("en-US", {
+            weekday: "long",
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+          });
+
+        const grid = document.getElementById("resultsGrid");
+        grid.innerHTML = "";
+        CATS.forEach((c, i) => {
+          const s = scores[i];
+          const div = document.createElement("div");
+          div.className = "result-row";
+          div.innerHTML = `
+      <span class="result-dot" style="background:${c.color}"></span>
+      <span class="result-name">${c.name}</span>
+      <span class="result-score">${s > 0 ? s + "/10" : "—"}</span>
+      <span class="result-bar-bg"><span class="result-bar-fill" style="width:${s * 10}%;background:${c.color}88"></span></span>`;
+          grid.appendChild(div);
+        });
+
+        const statsEl = document.getElementById("summaryStats");
+        statsEl.innerHTML = `
+    <div class="stat-card">
+      <div class="stat-label">Average score</div>
+      <div class="stat-value">${avg}</div>
+      <div class="stat-sub">out of 10</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Areas rated</div>
+      <div class="stat-value">${rated.length}</div>
+      <div class="stat-sub">of ${N} total</div>
+    </div>
+    <div class="stat-card" style="flex:2; min-width:200px;">
+      <div class="stat-label">Focus areas (scored 4 or below)</div>
+      <div class="stat-value" style="font-size:1rem; padding-top:4px; font-family:'DM Sans',sans-serif; font-weight:400; color:var(--text-dark);">
+        ${low.length ? low.join(", ") : "None in this range"}
+      </div>
+    </div>
+    ${
+      high.length
+        ? `<div class="stat-card" style="flex:2; min-width:200px;">
+      <div class="stat-label">Strengths (scored 8 or above)</div>
+      <div class="stat-value" style="font-size:1rem; padding-top:4px; font-family:'DM Sans',sans-serif; font-weight:400; color:var(--text-dark);">${high.join(", ")}</div>
+    </div>`
+        : ""
+    }`;
+
+        const panel = document.getElementById("resultsPanel");
+        panel.classList.add("visible");
+        panel.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+
+      buildLegend();
+      draw();
+    </script>
+  </body>
+</html>
